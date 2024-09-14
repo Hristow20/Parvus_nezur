@@ -26,13 +26,13 @@ local Branch, NotificationTime, IsLocal = ...
 local QueueOnTeleport = queue_on_teleport
 
 local function GetFile(File)
-    print(readfile("Parvus_nezur/" .. File))
     return IsLocal and readfile("Parvus_nezur/" .. File)
     or game:HttpGet(("%s%s"):format(Parvus.Source, File))
 end
 
 local function LoadScript(Script)
     print(GetFile(Script .. ".lua"), Script)
+    
     return loadstring(GetFile(Script .. ".lua"), Script)()
 end
 
