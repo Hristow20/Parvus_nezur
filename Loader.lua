@@ -26,7 +26,7 @@ local Branch, NotificationTime, IsLocal = ...
 local QueueOnTeleport = queue_on_teleport
 
 local function GetFile(File)
-    return IsLocal and readfile("Parvus/" .. File)
+    return IsLocal and readfile("Parvus_nezur/" .. File)
     or game:HttpGet(("%s%s"):format(Parvus.Source, File))
 end
 
@@ -45,7 +45,7 @@ local function GetGameInfo()
 end
 
 getgenv().Parvus = {
-    Source = "https://raw.githubusercontent.com/AlexR32/Parvus/" .. Branch .. "/",
+    Source = "https://raw.githubusercontent.com/Hristow20/Parvus_nezur/" .. Branch .. "/",
 
     Games = {
         ["Universal" ] = { Name = "Universal",                  Script = "Universal"  },
