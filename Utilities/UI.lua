@@ -2190,13 +2190,13 @@ Bracket.Assets = {
 	end
 }
 Bracket.Elements = {
-	--Screen = function()
-	--	local ScreenAsset = Bracket.Assets:Screen()
-	--	if not Bracket.IsLocal then sethiddenproperty(ScreenAsset, "OnTopOfCoreBlur", true) end
-	--	ScreenAsset.Name = "Bracket " .. game:GetService("HttpService"):GenerateGUID(false)
-	--	ScreenAsset.Parent = Bracket.IsLocal and LocalPlayer:FindFirstChildOfClass("PlayerGui") or CoreGui
-	--	Bracket.Screen = ScreenAsset
-	--end,
+	Screen = function()
+		local ScreenAsset = Bracket.Assets:Screen()
+		if not Bracket.IsLocal then sethiddenproperty(ScreenAsset, "OnTopOfCoreBlur", true) end
+		ScreenAsset.Name = "Bracket " .. game:GetService("HttpService"):GenerateGUID(false)
+		ScreenAsset.Parent = Bracket.IsLocal and LocalPlayer:FindFirstChildOfClass("PlayerGui") or CoreGui
+		Bracket.Screen = ScreenAsset
+	end,
 	Window = function(Window)
 		local WindowAsset = Bracket.Assets.Window()
 
@@ -3633,7 +3633,7 @@ Bracket.Elements = {
 	end
 }
 
---Bracket.Elements.Screen()
+Bracket.Elements.Screen()
 function Bracket:Window(Window)
 	Window = Bracket.Utilities:GetType(Window, {}, "table", true)
 	Window.Blur = Bracket.Utilities:GetType(Window.Blur, false, "boolean")
