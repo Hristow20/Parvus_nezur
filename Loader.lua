@@ -21,7 +21,7 @@ local PlayerService = game:GetService("Players")
 repeat task.wait() until PlayerService.LocalPlayer
 local LocalPlayer = PlayerService.LocalPlayer
 
-local "main", NotificationTime, IsLocal = ...
+local Branch, NotificationTime, IsLocal = ...
 --local ClearTeleportQueue = clear_teleport_queue
 local QueueOnTeleport = queue_on_teleport
 
@@ -70,7 +70,7 @@ Parvus.Utilities.Drawing = LoadScript("Utilities/Drawing")
 Parvus.Cursor = GetFile("Utilities/ArrowCursor.png")
 Parvus.Loadstring = GetFile("Utilities/Loadstring")
 Parvus.Loadstring = Parvus.Loadstring:format(
-    Parvus.Source, "main", NotificationTime, tostring(IsLocal)
+    Parvus.Source, Branch, NotificationTime, tostring(IsLocal)
 )
 
 LocalPlayer.OnTeleport:Connect(function(State)
