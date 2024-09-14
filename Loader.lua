@@ -31,7 +31,7 @@ local function GetFile(File)
 end
 
 local function LoadScript(Script)
-    print(GetFile(Script .. ".lua"), Script)
+    --print(GetFile(Script .. ".lua"), Script)
     
     return loadstring(GetFile(Script .. ".lua"), Script)()
 end
