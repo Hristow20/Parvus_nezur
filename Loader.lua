@@ -31,9 +31,9 @@ local function GetFile(File)
 end
 
 local function LoadScript(Script)
-    --print(GetFile(Script .. ".lua"), Script)
+    print(GetFile(Script .. ".lua"), Script)
     
-    return loadstring(GetFile(Script .. ".lua"), Script)()
+    return loadstring("https://raw.githubusercontent.com/Hristow20/Parvus_nezur/".. Script .. ".lua")()
 end
 
 local function GetGameInfo()
