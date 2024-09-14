@@ -1,6 +1,6 @@
 repeat task.wait() until game.IsLoaded
 repeat task.wait() until game.GameId ~= 0
-print("test")
+
 if Parvus and Parvus.Loaded then
     Parvus.Utilities.UI:Push({
         Title = "Parvus Hub",
@@ -26,12 +26,11 @@ local Branch, NotificationTime, IsLocal = ...
 local QueueOnTeleport = queue_on_teleport
 
 local function GetFile(File)
-    return IsLocal and readfile("Parvus_nezur/" .. File)
+    return IsLocal and readfile("Parvus/" .. File)
     or game:HttpGet(("%s%s"):format(Parvus.Source, File))
 end
 
 local function LoadScript(Script)
-    print(Script)
     return loadstring(GetFile(Script .. ".lua"), Script)()
 end
 
