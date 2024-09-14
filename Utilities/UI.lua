@@ -9,7 +9,7 @@ local CoreGui = game:GetService("CoreGui")
 local GuiInset = GuiService:GetGuiInset()
 local LocalPlayer = PlayerService.LocalPlayer
 local Bracket = {IsLocal = not identifyexecutor}
-
+print("ui")
 Bracket.Utilities = {
 	TableToColor = function(Table)
 		if type(Table) ~= "table" then return Table end
