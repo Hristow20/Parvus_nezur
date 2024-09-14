@@ -21,7 +21,7 @@ local PlayerService = game:GetService("Players")
 repeat task.wait() until PlayerService.LocalPlayer
 local LocalPlayer = PlayerService.LocalPlayer
 
-local Branch, NotificationTime, IsLocal = ...
+local "main", "30", IsLocal = ...
 --local ClearTeleportQueue = clear_teleport_queue
 local QueueOnTeleport = queue_on_teleport
 
@@ -74,7 +74,7 @@ Parvus.Utilities.Drawing = LoadScript("Utilities/Drawing")
 Parvus.Cursor = GetFile("Utilities/ArrowCursor.png")
 Parvus.Loadstring = GetFile("Utilities/Loadstring")
 Parvus.Loadstring = Parvus.Loadstring:format(
-    Parvus.Source, Branch, NotificationTime, tostring(IsLocal)
+    Parvus.Source, "main", "30", tostring(IsLocal)
 )
 
 LocalPlayer.OnTeleport:Connect(function(State)
@@ -91,5 +91,5 @@ Parvus.Loaded = true
 Parvus.Utilities.UI:Push({
     Title = "Parvus Hub",
     Description = Parvus.Game.Name .. " loaded!\n\nThis script is open sourced\nIf you have paid for this script\nOr had to go thru ads\nYou have been scammed.",
-    Duration = NotificationTime
+    Duration = "30"
 })
