@@ -2189,26 +2189,53 @@ Bracket.Assets = {
 		return Palette
 	end
 }
-Bracket.Elements = {
-	Bracket.Assets = Bracket.Assets or {}
-Bracket.Assets.Screen = Bracket.Assets.Screen or function()
-    local ScreenAsset = Instance.new("ScreenGui")
-    ScreenAsset.Name = "Bracket " .. game:GetService("HttpService"):GenerateGUID(false)
-    
+Bracket.Elements.Screen = function()
+    local function logError(message)
+        warn("[Bracket] Screen Error: " .. message)
+    end
+
+    local ScreenAsset
+    local success, result = pcall(function()
+        return Bracket.Assets:Screen()
+    end)
+
+    if success and result then
+        ScreenAsset = result
+    else
+        logError("Failed to create ScreenAsset. Error: " .. tostring(result))
+        return  -- Exit the function if we couldn't create the ScreenAsset
+    end
+
+    if not ScreenAsset then
+        logError("ScreenAsset is nil")
+        return  -- Exit the function if ScreenAsset is nil
+    end
+
     if not Bracket.IsLocal then
-        pcall(function()
+        local success, result = pcall(function()
             sethiddenproperty(ScreenAsset, "OnTopOfCoreBlur", true)
         end)
+        if not success then
+            logError("Failed to set OnTopOfCoreBlur property. Error: " .. tostring(result))
+        end
     end
-    
-    ScreenAsset.Parent = Bracket.IsLocal and LocalPlayer:FindFirstChildOfClass("PlayerGui") or game:GetService("CoreGui")
-    return ScreenAsset
-end
 
-Bracket.Screen = function()
-    local ScreenAsset = Bracket.Assets.Screen()
+    ScreenAsset.Name = "Bracket " .. game:GetService("HttpService"):GenerateGUID(false)
+
+    local parent
+    if Bracket.IsLocal then
+        parent = LocalPlayer:FindFirstChildOfClass("PlayerGui")
+    else
+        parent = CoreGui
+    end
+
+    if not parent then
+        logError("Failed to find parent for ScreenAsset")
+        return
+    end
+
+    ScreenAsset.Parent = parent
     Bracket.Screen = ScreenAsset
-    return ScreenAsset
 end
 	Window = function(Window)
 		local WindowAsset = Bracket.Assets.Window()
