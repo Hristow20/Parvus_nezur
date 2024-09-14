@@ -4,7 +4,7 @@ local RunService = game:GetService("RunService")
 local PlayerService = game:GetService("Players")
 local Workspace = game:GetService("Workspace")
 local Lighting = game:GetService("Lighting")
-
+print("test")
 if game.PlaceId == 2916899287 then
     Parvus.Utilities.UI:Push({Title = "Parvus Hub", Description = "Please join the game"})
     return
