@@ -1,39 +1,42 @@
-repeat task.wait() until game.IsLoaded
+repeat task.wait() until game:IsLoaded()
 repeat task.wait() until game.GameId ~= 0
-
-if Parvus and Parvus.Loaded then
-    Parvus.Utilities.UI:Push({
-        Title = "Parvus Hub",
-        Description = "Script already running!",
-        Duration = 5
-    }) return
-end
-
---[[if Parvus and (Parvus.Game and not Parvus.Loaded) then
-    Parvus.Utilities.UI:Push({
-        Title = "Parvus Hub",
-        Description = "Something went wrong!",
-        Duration = 5
-    }) return
-end]]
-
 local PlayerService = game:GetService("Players")
 repeat task.wait() until PlayerService.LocalPlayer
 local LocalPlayer = PlayerService.LocalPlayer
 
+if getgenv().Parvus and Parvus.Loaded then
+    Parvus.Utilities.UI:Push({
+        Title = "Parvus Hub",
+        Description = "Script already running!",
+        Duration = 5
+    })
+    return
+end
+
 local Branch, NotificationTime, IsLocal = ...
---local ClearTeleportQueue = clear_teleport_queue
-local QueueOnTeleport = queue_on_teleport
+local QueueOnTeleport = queue_on_teleport or syn.queue_on_teleport
+
+local function SafeGetService(serviceName)
+    local success, service = pcall(game.GetService, game, serviceName)
+    assert(success and service, "Failed to get service: " .. serviceName)
+    return service
+end
+
+local HttpService = SafeGetService("HttpService")
 
 local function GetFile(File)
-    return IsLocal and readfile("Parvus_nezur/" .. File)
-    or game:HttpGet(("%s%s"):format(Parvus.Source, File))
+    local success, content = pcall(function()
+        return IsLocal and readfile("Parvus_nezur/" .. File)
+        or game:HttpGet(("%s%s"):format(Parvus.Source, File))
+    end)
+    assert(success and content, "Failed to get file: " .. File)
+    return content
 end
 
 local function LoadScript(Script)
-    print(GetFile(Script .. ".lua"), Script)
-    
-    return loadstring("https://raw.githubusercontent.com/Hristow20/Parvus_nezur/".. Script .. ".lua")()
+    local success, result = pcall(loadstring, GetFile(Script .. ".lua"))
+    assert(success and result, "Failed to load script: " .. Script)
+    return result()
 end
 
 local function GetGameInfo()
@@ -42,13 +45,11 @@ local function GetGameInfo()
             return Info
         end
     end
-
     return Parvus.Games.Universal
 end
 
 getgenv().Parvus = {
     Source = "https://raw.githubusercontent.com/Hristow20/Parvus_nezur/" .. Branch .. "/",
-
     Games = {
         ["Universal" ] = { Name = "Universal",                  Script = "Universal"  },
         ["1168263273"] = { Name = "Bad Business",               Script = "Games/BB"   },
@@ -63,10 +64,15 @@ getgenv().Parvus = {
     }
 }
 
-Parvus.Utilities = LoadScript("Utilities/Main")
-Parvus.Utilities.UI = LoadScript("Utilities/UI")
-Parvus.Utilities.Physics = LoadScript("Utilities/Physics")
-Parvus.Utilities.Drawing = LoadScript("Utilities/Drawing")
+local function SafeLoadUtilities()
+    Parvus.Utilities = LoadScript("Utilities/Main")
+    Parvus.Utilities.UI = LoadScript("Utilities/UI")
+    Parvus.Utilities.Physics = LoadScript("Utilities/Physics")
+    Parvus.Utilities.Drawing = LoadScript("Utilities/Drawing")
+end
+
+pcall(SafeLoadUtilities)
+assert(Parvus.Utilities and Parvus.Utilities.UI, "Failed to load essential utilities")
 
 Parvus.Cursor = GetFile("Utilities/ArrowCursor.png")
 Parvus.Loadstring = GetFile("Utilities/Loadstring")
@@ -76,7 +82,6 @@ Parvus.Loadstring = Parvus.Loadstring:format(
 
 LocalPlayer.OnTeleport:Connect(function(State)
     if State == Enum.TeleportState.InProgress then
-        --ClearTeleportQueue()
         QueueOnTeleport(Parvus.Loadstring)
     end
 end)
