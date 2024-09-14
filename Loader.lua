@@ -31,12 +31,7 @@ local function GetFile(File)
 end
 
 local function LoadScript(Script)
-    local loaded = safeLoadScript(Script)
-    if not loaded then
-        warn("Failed to load " .. Script .. ". Falling back to Universal script.")
-        return safeLoadScript("Universal")
-    end
-    return loaded
+    return loadstring(GetFile(Script .. ".lua"), Script)()
 end
 
 local function GetGameInfo()
