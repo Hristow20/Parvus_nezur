@@ -15,12 +15,12 @@ local Packages = ReplicatedStorage:WaitForChild("Packages")
 local Events = ReplicatedStorage:WaitForChild("Events")
 local RemoteEvent = Events:WaitForChild("RemoteEvent")
 
-local ServerSettings = {
-    -- Add any default settings you need here
-    FIRSTPERSON_LOCKED = false,
-    CHEATS_ENABLED = false
-    -- Add more default settings as needed
-}
+-- Temporary method
+--local OldIdentity = getthreadidentity()
+--setthreadidentity(2)
+local Server = require(Packages:WaitForChild("server"))
+ServerSettings = Server._cache
+--setthreadidentity(OldIdentity)
 
 local Camera = Workspace.CurrentCamera
 local LocalPlayer = PlayerService.LocalPlayer
