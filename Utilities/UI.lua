@@ -3360,9 +3360,9 @@ Bracket.Elements = {
 					local ColorX = math.clamp(Mouse.X - PaletteAsset.SVPicker.AbsolutePosition.X, 0, PaletteAsset.SVPicker.AbsoluteSize.X) / PaletteAsset.SVPicker.AbsoluteSize.X
 					local ColorY = math.clamp(Mouse.Y - (PaletteAsset.SVPicker.AbsolutePosition.Y + GuiInset.Y), 0, PaletteAsset.SVPicker.AbsoluteSize.Y) / PaletteAsset.SVPicker.AbsoluteSize.Y
 
-					Colorpicker.Value[2] = ColorX
-					Colorpicker.Value[3] = 1 - ColorY
-					Colorpicker.Value = Colorpicker.Value
+					--Colorpicker.Value[2] = ColorX
+					--Colorpicker.Value[3] = 1 - ColorY
+					--Colorpicker.Value = Colorpicker.Value
 				end)
 			end
 		end)
