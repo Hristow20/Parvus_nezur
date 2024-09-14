@@ -2192,7 +2192,7 @@ Bracket.Assets = {
 Bracket.Elements = {
 	Screen = function()
 		local ScreenAsset = Bracket.Assets:Screen()
-		if not Bracket.IsLocal then sethiddenproperty(ScreenAsset, "OnTopOfCoreBlur", true) end
+		--if not Bracket.IsLocal then sethiddenproperty(ScreenAsset, "OnTopOfCoreBlur", true) end
 		ScreenAsset.Name = "Bracket " .. game:GetService("HttpService"):GenerateGUID(false)
 		ScreenAsset.Parent = Bracket.IsLocal and LocalPlayer:FindFirstChildOfClass("PlayerGui") or CoreGui
 		Bracket.Screen = ScreenAsset
